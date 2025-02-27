@@ -944,3 +944,92 @@ Antwort:
 - **Statuscodes** geben Feedback über den Erfolg oder Fehler einer Anfrage.
 
 Diese Grundstruktur kann für komplexere APIs erweitert werden! 🚀
+
+
+
+## Vorbereitung in VS Code
+### 1. Voraussetzungen installieren
+Falls du **Node.js** noch nicht installiert hast, lade es hier herunter und installiere es:  
+[https://nodejs.org](https://nodejs.org)
+
+Überprüfe die Installation mit:
+```
+node -v
+npm -v
+```
+Diese Befehle sollten dir die installierte Version von Node.js und npm anzeigen.
+
+### 2. Express.js-Projekt einrichten
+Erstelle ein neues Projektverzeichnis und wechsle hinein:
+```
+mkdir mein-api-projekt
+cd mein-api-projekt
+```
+
+Initialisiere das Projekt mit npm:
+```
+npm init -y
+```
+Dadurch wird eine `package.json` Datei erstellt.
+
+### 3. Express.js installieren
+Installiere Express als Abhängigkeit:
+```
+npm install express
+```
+
+### 4. Entwicklungswerkzeuge
+Für eine bessere Entwicklungserfahrung kannst du Nodemon installieren, damit dein Server automatisch neu gestartet wird:
+```
+npm install --save-dev nodemon
+```
+
+Füge in der `package.json` unter `scripts` folgendes hinzu:
+```json
+"scripts": {
+  "start": "node server.js",
+  "dev": "nodemon server.js"
+}
+```
+
+Nun kannst du den Server mit folgendem Befehl im Entwicklungsmodus starten:
+```
+npm run dev
+```
+
+---
+
+## API-Grundstruktur mit Express.js
+Hier ist eine einfache API, die mit **Node.js und Express** erstellt wurde. Sie speichert Benutzer und gibt sie als JSON zurück.
+
+```javascript
+const express = require('express'); // Express.js importieren
+const app = express(); // Express-Anwendung erstellen
+const port = 3000; // Port-Nummer festlegen
+
+app.use(express.json()); // Middleware für JSON-Daten aktivieren
+
+let users = [ // Beispiel-Datenbank (Array von Benutzern)
+    { id: 1, name: "Alice" },
+    { id: 2, name: "Bob" }
+];
+
+// GET-Route: Alle Benutzer abrufen
+app.get('/users', (req, res) => {
+    res.json(users);
+});
+
+// POST-Route: Neuen Benutzer hinzufügen
+app.post('/users', (req, res) => {
+    const newUser = { id: users.length + 1, name: req.body.name };
+    users.push(newUser);
+    res.status(201).json(newUser);
+});
+
+// Server starten
+app.listen(port, () => console.log(`Server läuft auf Port ${port}`));
+```
+
+---
+
+
